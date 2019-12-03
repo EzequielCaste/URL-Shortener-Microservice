@@ -48,17 +48,15 @@ app.post("/api/shorturl/new", function(req,res){
   if(regex.test(url)){
     // string contains https:// or http://
     // splice string to remove http part
-    let startPos = url.indexOf("//")+2
-    url = url.slice(startPos)
-    
+    dns.lookup(url.slice(url.indexOf("//")+2), function(err,res){
+      if(err) return console.log(err)
+      console.log(res)
+    })
   }
   
   
   
-  dns.lookup(url, function(err,res){
-    if(err) return console.log(err)
-    console.log(res)
-  })
+ 
   
   
 })
