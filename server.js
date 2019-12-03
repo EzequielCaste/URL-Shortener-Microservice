@@ -40,11 +40,22 @@ app.get("/api/hello", function (req, res) {
 
 app.post("/api/shorturl/new", function(req,res){
   
-  let regex = /https:\/\//;
+  // https://www.freecodecamp.org
   
-  console.log(req.body.url)
+  let regex = /https?:\/\//; 
+  let url = req.body.url
   
-  dns.lookup("https://www.google.com", function(err,res){
+  if(regex.test(url)){
+    // string contains https:// or http://
+    // splice string to remove http part
+    let startPos = url.indexOf("//")+2
+    url = url.slice(startPos)
+    
+  }
+  
+  
+  
+  dns.lookup(url, function(err,res){
     if(err) return console.log(err)
     console.log(res)
   })
