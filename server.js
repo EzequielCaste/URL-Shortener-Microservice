@@ -4,7 +4,10 @@ var express = require('express');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var bodyParser = require("body-parser");
-var dns = require("dns")
+var dns = require("dns");
+var mongoose = require("mongoose");
+
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true});
 
 var cors = require('cors');
 
@@ -37,7 +40,15 @@ app.get("/api/hello", function (req, res) {
 
 app.post("/api/shorturl/new", function(req,res){
   
+  let regex = /https:\/\//;
+  
   console.log(req.body.url)
+  
+  dns.lookup("https://www.google.com", function(err,res){
+    if(err) return console.log(err)
+    console.log(res)
+  })
+  
   
 })
 
