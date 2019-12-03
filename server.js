@@ -3,10 +3,14 @@
 var express = require('express');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var bodyParser = require("body-parser");
+var dns = require("dns")
 
 var cors = require('cors');
 
 var app = express();
+
+app.use(bodyParser.urlencoded({extended: true}));
 
 // Basic Configuration 
 var port = process.env.PORT || 3000;
@@ -33,7 +37,7 @@ app.get("/api/hello", function (req, res) {
 
 app.post("/api/shorturl/new", function(req,res){
   
-  console.log(req)
+  console.log(req.body.url)
   
 })
 
