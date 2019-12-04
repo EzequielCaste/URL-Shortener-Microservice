@@ -5,17 +5,19 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var bodyParser = require("body-parser");
 var dns = require("dns");
-var mongoose = require("mongoose");
 var sha = require("sha-1");
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true});
 
-var addressSchema = new mongoose.Schema({
+console.log(mongoose.connection.readyState)
+
+
+var linkSchema = new mongoose.Schema({
   url: String,
   hash: String
 })
 
-var Address = mongoose.model('Address', addressSchema);
+var Link = mongoose.model('Link', linkSchema);
 
 var cors = require('cors');
 
@@ -55,19 +57,31 @@ app.post("/api/shorturl/new", function(req,res){
   let url = req.body.url
   
   if(regex.test(url)){
+    
     // string contains https:// or http://
     // splice string to remove http part
+    
     dns.lookup(url.slice(url.indexOf("//")+2), function(err,res){
       if(err) return console.log(err)
       
       let id = sha(res).substring(0,7);
       
-      let link = new Address({
-        url: url.slice(url.indexOf("//"))+2,
+      let newAddress = {
+        url: url.slice(url.indexOf("//")+2),
         hash: id
+      }
+      
+      //console.log(newAddress)
+      
+      Link.create(newAddress, function(err, created){
+        if(err) return console.log(err)
+        
+        console.log("here")
+        
       })
       
-      //console.log(mongoose.connection.readyState)
+       
+      //
     
     })
   }
