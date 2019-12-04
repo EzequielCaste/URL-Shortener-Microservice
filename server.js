@@ -8,11 +8,22 @@ var dns = require("dns");
 var sha = require("sha-1");
 var cors = require('cors');
 
-mongoose.connect(process.env.MONGO_URI, { useUnifiedTopology: true , useNewUrlParser: true }, function(err){
+mongoose.connect("mongodb+srv://eze:fcc456@cluster0-py5g6.mongodb.net/test?retryWrites=true&w=majority",
+                 { useUnifiedTopology: true , useNewUrlParser: true }, function(err){
   if(err) return console.log(err)
+  
+  console.log(mongoose.connection.readyState)
   
   
 });
+
+var linkSchema = new mongoose.Schema({
+	address: String,
+	has: String,
+	description: String
+});
+
+var Campground = mongoose.model("Campground",linkSchema);
 
 var app = express();
 
