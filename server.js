@@ -6,10 +6,9 @@ var mongoose = require('mongoose');
 var bodyParser = require("body-parser");
 var dns = require("dns");
 var sha = require("sha-1");
-
-mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true});
-
 var cors = require('cors');
+
+mongoose.connect(process.env.MONGO_URI, { useUnifiedTopology: true , useNewUrlParser: true });
 
 var app = express();
 
