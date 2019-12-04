@@ -6,8 +6,16 @@ var mongoose = require('mongoose');
 var bodyParser = require("body-parser");
 var dns = require("dns");
 var mongoose = require("mongoose");
+var sha = require("sha-1");
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true});
+
+var addressSchema = new mongoose.Schema({
+  url: String,
+  hash: String
+})
+
+var Address = mongoose.model('Address', addressSchema);
 
 var cors = require('cors');
 
@@ -52,7 +60,15 @@ app.post("/api/shorturl/new", function(req,res){
     dns.lookup(url.slice(url.indexOf("//")+2), function(err,res){
       if(err) return console.log(err)
       
-      console.log(res,mongoose.connection.readyState)
+      let id = sha(res).substring(0,7);
+      
+      let link = new Address({
+        url: url.slice(url.indexOf("//")+2,
+        hash: id
+      })
+      
+      console.log(mongoose.connection.readyState)
+    
     })
   }
   
