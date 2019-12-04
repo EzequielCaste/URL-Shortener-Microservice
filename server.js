@@ -29,6 +29,7 @@ app.use(cors());
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.get('/', function(req, res){
+  console.log(mongoose.connection.readyState)
   res.sendFile(process.cwd() + '/views/index.html');
 });
 
