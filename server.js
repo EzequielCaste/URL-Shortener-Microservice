@@ -19,11 +19,10 @@ mongoose.connect("mongodb+srv://eze:fcc456@cluster0-py5g6.mongodb.net/test?retry
 
 var linkSchema = new mongoose.Schema({
 	address: String,
-	has: String,
-	description: String
+	hash: String
 });
 
-var Campground = mongoose.model("Campground",linkSchema);
+var Link = mongoose.model("Link",linkSchema);
 
 var app = express();
 
