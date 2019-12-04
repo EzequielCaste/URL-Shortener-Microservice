@@ -50,7 +50,8 @@ app.post("/api/shorturl/new", function(req,res){
     // splice string to remove http part
     dns.lookup(url.slice(url.indexOf("//")+2), function(err,res){
       if(err) return console.log(err)
-      console.log(res)
+      
+      console.log(res,mongoose.connection.readyState)
     })
   }
   
