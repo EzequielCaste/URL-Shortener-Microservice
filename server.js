@@ -37,7 +37,7 @@ app.use(cors());
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.get('/', function(req, res){
-  console.log(mongoose.connection.readyState)
+  //console.log(mongoose.connection.readyState)
   res.sendFile(process.cwd() + '/views/index.html');
 });
 
@@ -63,11 +63,11 @@ app.post("/api/shorturl/new", function(req,res){
       let id = sha(res).substring(0,7);
       
       let link = new Address({
-        url: url.slice(url.indexOf("//")+2,
+        url: url.slice(url.indexOf("//"))+2,
         hash: id
       })
       
-      console.log(mongoose.connection.readyState)
+      //console.log(mongoose.connection.readyState)
     
     })
   }
