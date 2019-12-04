@@ -5,6 +5,7 @@ dependencies:
   express: 5.0.0-alpha.7
   mongodb: 2.2.36
   mongoose: 4.13.19
+  sha-1: 0.1.1
 packages:
   /accepts/1.0.7:
     dependencies:
@@ -1266,6 +1267,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JvdAWfbXeIGaZ9cILp38HntZSFSo3mWg6xGcJJsd+d4aRMOqauag1C63dJfDw7OaMYwEbHMOxEZ1lqVRYP2OAw==
+  /sha-1/0.1.1:
+    dev: false
+    resolution:
+      integrity: sha1-KjkwS/QburEd2e+3R07CWxqSwlc=
   /sliced/0.0.5:
     dev: false
     resolution:
@@ -1501,6 +1506,7 @@ packages:
       node: '>=0.4.0'
     name: xmlhttprequest
     resolution:
+      registry: 'https://registry.npmjs.org/'
       tarball: 'https://github.com/LearnBoost/node-XMLHttpRequest/archive/0f36d0b5ebc03d85f860d42a64ae9791e1daa433.tar.gz'
     version: 1.5.0
   github.com/component/emitter/archive/1.0.1.tar.gz:
@@ -1509,12 +1515,14 @@ packages:
     dev: false
     name: emitter
     resolution:
+      registry: 'https://registry.npmjs.org/'
       tarball: 'http://github.com/component/emitter/archive/1.0.1.tar.gz'
     version: 1.0.1
   github.com/component/global/archive/v2.0.1.tar.gz:
     dev: false
     name: global
     resolution:
+      registry: 'https://registry.npmjs.org/'
       tarball: 'https://github.com/component/global/archive/v2.0.1.tar.gz'
     version: 2.0.1
 registry: 'https://registry.npmjs.org/'
@@ -1527,3 +1535,4 @@ specifiers:
   express: ^5.0.0-alpha.2
   mongodb: ^2.2.5
   mongoose: ^4.5.7
+  sha-1: ^0.1.1
