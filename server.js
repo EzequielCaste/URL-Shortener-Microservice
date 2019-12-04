@@ -8,7 +8,11 @@ var dns = require("dns");
 var sha = require("sha-1");
 var cors = require('cors');
 
-mongoose.connect(process.env.MONGO_URI, { useUnifiedTopology: true , useNewUrlParser: true });
+mongoose.connect(process.env.MONGO_URI, { useUnifiedTopology: true , useNewUrlParser: true }, function(err){
+  if(err) return console.log(err)
+  
+  
+});
 
 var app = express();
 
