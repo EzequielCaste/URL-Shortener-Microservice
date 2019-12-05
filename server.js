@@ -70,16 +70,21 @@ app.post("/api/shorturl/new", function(req,res){
       Link.find({hashId: id}, function(err, foundId){
         if(err) return console.log(err)
         
+        if(foundId = []) {
+          
+          Link.create(newAddress, function(err, created){
+            if(err) return console.log(err)
         
-
-        
-      })
-      
-    
+            return console.log("Link added to db", created) 
+          
+          })
+        } else {
+          console.log("here")
+        }
     })
-  }
+  })
+}
 })
-  
 
 app.listen(process.env.PORT || 3000 , function () {
   console.log('Your app is listening on port ');
