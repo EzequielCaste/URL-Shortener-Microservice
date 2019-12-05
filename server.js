@@ -71,18 +71,7 @@ app.post("/api/shorturl/new", function(req,res){
         if(err) return console.log(err)
         
         
-        if(!foundId || foundId == []) {
-          Link.create(newAddress, function(err, created){
-            if(err) return console.log(err)
-        
-            return console.log("Link added to db", created) 
-        
-          //res.redirect("/views/index.html");
-        
-          })
-        } else {
-          return console.log("Link already in db", foundId)
-        }
+
         
       })
       
