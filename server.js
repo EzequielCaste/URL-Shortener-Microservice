@@ -63,28 +63,29 @@ app.post("/api/shorturl/new", function(req,res){
       
       let newAddress = {address: link, hashId: id}
       
-      console.log(newAddress)
+      //console.log(newAddress)
       
       //Check if link already exists in db
       
       Link.find({hashId: id}, function(err, foundId){
         if(err) return console.log(err)
         
-        console.log(foundId)
+        
+        if(!foundId) {
+          Link.create(newAddress, function(err, created){
+            if(err) return console.log(err)
+        
+            return console.log("Link added to db", created) 
+        
+          //res.redirect("/views/index.html");
+        
+          })
+        } else {
+          return console.log("Link already in db", foundId)
+        }
         
       })
       
-      Link.create(newAddress, function(err, created){
-        if(err) return console.log(err)
-        
-        console.log(created) 
-        
-        res.redirect("/views/index.html");
-        
-      })
-      
-       
-      //
     
     })
   }
