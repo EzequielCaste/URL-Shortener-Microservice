@@ -71,7 +71,7 @@ app.post("/api/shorturl/new", function(req,res){
         if(err) return console.log(err)
         
         
-        if(!foundId) {
+        if(!foundId || foundId == []) {
           Link.create(newAddress, function(err, created){
             if(err) return console.log(err)
         
