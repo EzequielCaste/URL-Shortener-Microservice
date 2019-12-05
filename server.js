@@ -7,6 +7,7 @@ var bodyParser = require("body-parser");
 var dns = require("dns");
 var sha = require("sha-1");
 var cors = require('cors');
+var path = require('path');
 
 mongoose.connect("mongodb+srv://eze:fcc456@cluster0-py5g6.mongodb.net/test?retryWrites=true&w=majority",
                  { useUnifiedTopology: true , useNewUrlParser: true }, function(err){
@@ -38,7 +39,7 @@ app.use('/public', express.static(process.cwd() + '/public'));
 
 // INDEX ROUTE
 app.get('/', function(req, res){
-  res.send("hola")
+  res.send("hola");
 });
 
 
