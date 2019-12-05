@@ -37,8 +37,9 @@ mongoose.connect("mongodb+srv://eze:fcc456@cluster0-py5g6.mongodb.net/test?retry
 
 
 var linkSchema = new mongoose.Schema({
-	address: String,
-	hash: String
+	linkAddress: String,
+	hash: String,
+  link: String
 });
 
 var Link = mongoose.model("Link",linkSchema);
@@ -59,18 +60,16 @@ app.post("/api/shorturl/new", function(req,res){
       if(err) return console.log(err)
       
       let id = sha(res).substring(0,7);
+      let link = url.slice(url.indexOf("//")+2);
       
-      let newAddress = {
-        urlAddress: url.slice(url.indexOf("//")+2),
-        hash: id
-      }
+      let newAddress = {urlAddress: link, hash: id }
       
       console.log(newAddress)
       
       Link.create(newAddress, function(err, created){
         if(err) return console.log(err)
         
-        console.log("here")
+        console.log(created)
         
       })
       
