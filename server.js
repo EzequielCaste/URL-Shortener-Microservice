@@ -61,11 +61,11 @@ app.post("/api/shorturl/new", function(req,res){
       let id = sha(res).substring(0,7);
       
       let newAddress = {
-        url: url.slice(url.indexOf("//")+2),
+        urlAddress: url.slice(url.indexOf("//")+2),
         hash: id
       }
       
-      //console.log(newAddress)
+      console.log(newAddress)
       
       Link.create(newAddress, function(err, created){
         if(err) return console.log(err)
