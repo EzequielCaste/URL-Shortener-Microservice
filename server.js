@@ -65,6 +65,15 @@ app.post("/api/shorturl/new", function(req,res){
       
       console.log(newAddress)
       
+      //Check if link already exists in db
+      
+      Link.find({hashId: id}, function(err, foundId){
+        if(err) return console.log(err)
+        
+        console.log(foundId)
+        
+      })
+      
       Link.create(newAddress, function(err, created){
         if(err) return console.log(err)
         
