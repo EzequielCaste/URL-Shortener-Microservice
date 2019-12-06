@@ -25,6 +25,10 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
+app.get("/a", function(req,res){
+  res.sendFile(path.join(__dirname, "views", "test.html"))
+})
+
 
 mongoose.connect("mongodb+srv://eze:fcc456@cluster0-py5g6.mongodb.net/test?retryWrites=true&w=majority",
                  { useUnifiedTopology: true , useNewUrlParser: true }, function(err){
@@ -58,7 +62,8 @@ app.post("/api/shorturl/new", function(req,res){
     
     dns.lookup(url.slice(url.indexOf("//")+2), function(err,res){
       if(err) return console.log(err)
-      
+    })
+               
       // DNS lookup is OK
       //create an ID hash should be UNIQUE
       
@@ -66,7 +71,6 @@ app.post("/api/shorturl/new", function(req,res){
       let link = url.slice(url.indexOf("//")+2);
       
       let newAddress = {address: link, ipAddress: res, hashId: id}
-      
         
       //Check if link already exists in db
       
@@ -74,7 +78,7 @@ app.post("/api/shorturl/new", function(req,res){
         if(err) return console.log(err)
         
         if(foundId){
-          console.log("found", foundId)
+           return console.log("found", foundId)
         } else {
           console.log("not found")
           //NOT FOUND of collection empty
@@ -82,13 +86,16 @@ app.post("/api/shorturl/new", function(req,res){
           Link.create(newAddress, function(err, created){
             if(err) return console.log(err)
         
-            return console.log("Link added to db", created) 
+            console.log("Link added to db", created) 
+            
+            res.redirect("/views/index.html")
+            
           })
         }
     })
-  })
+  }
 }
-})
+)
 
 app.listen(process.env.PORT || 3000 , function () {
   console.log('Your app is listening on port ');
