@@ -59,29 +59,21 @@ app.post("/api/shorturl/new", function(req,res){
     dns.lookup(url.slice(url.indexOf("//")+2), function(err,res){
       if(err) return console.log(err)
       
+      // DNS lookup is OK
+      //create an ID hash should be UNIQUE
+      
       let id = sha(res).substring(0,7);
       let link = url.slice(url.indexOf("//")+2);
       
       let newAddress = {address: link, ipAddress: res, hashId: id}
       
-      //console.log(id,res)
-      
+        
       //Check if link already exists in db
       
-      Link.find({hashId: id}, function(err, foundId){
+      Link.find({address: newAddress.address}, function(err, foundId){
         if(err) return console.log(err)
         
-        if(foundId = []) {
-          
-          Link.create(newAddress, function(err, created){
-            if(err) return console.log(err)
-        
-            return console.log("Link added to db", created) 
-          
-          })
-        } else {
-          console.log("here")
-        }
+        console.log(foundId)
     })
   })
 }
