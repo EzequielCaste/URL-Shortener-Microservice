@@ -38,6 +38,7 @@ mongoose.connect("mongodb+srv://eze:fcc456@cluster0-py5g6.mongodb.net/test?retry
 
 var linkSchema = new mongoose.Schema({
   address: String,
+  ipAddress: String,
   hashId: String
 });
 
@@ -61,9 +62,9 @@ app.post("/api/shorturl/new", function(req,res){
       let id = sha(res).substring(0,7);
       let link = url.slice(url.indexOf("//")+2);
       
-      let newAddress = {address: link, hashId: id}
+      let newAddress = {address: link, ipAddress: res, hashId: id}
       
-      //console.log(newAddress)
+      //console.log(id,res)
       
       //Check if link already exists in db
       
