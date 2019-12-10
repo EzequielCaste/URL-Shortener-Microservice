@@ -52,10 +52,16 @@ var Link = mongoose.model("Link",linkSchema);
 app.post("/api/shorturl/new", function(req,res){
   
   //check if link already exists in db
-  Link.find({address: req.body.url}, function(err, foundEntry){
+  Link.findOne({address: req.body.url}, function(err, foundEntry){
     if(err) return console.log(err)
-    // if the returned array is empty we have to create the first db 
-    console.log(foundEntry)
+    
+    // if the returned array is empty we have to create the first db document
+    if(foundEntry.address === req.body.url){
+      console.log("link already exists in db")
+    } else {
+      Link.create()
+    }
+    
     
   })
   
