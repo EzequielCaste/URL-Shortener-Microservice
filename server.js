@@ -39,63 +39,25 @@ mongoose.connect("mongodb+srv://eze:fcc456@cluster0-py5g6.mongodb.net/test?retry
   
 });
 
+let linkCounter = 0;
 
 var linkSchema = new mongoose.Schema({
   address: String,
   ipAddress: String,
-  hashId: String
+  hashId: Number
 });
 
 var Link = mongoose.model("Link",linkSchema);
 
 app.post("/api/shorturl/new", function(req,res){
   
-  // https://www.freecodecamp.org
+  //check if link already exists in db
+  Link.findOne({address: req.body.url}, function(err, foundId){
+    if(err) return console.log("not found")
+  })
+  return console.log(req.body.url)
   
-  let regex = /https?:\/\//; 
-  let url = req.body.url
-  
-  if(regex.test(url)){
-    
-    // string contains https:// or http://
-    // splice string to remove http part
-    
-    dns.lookup(url.slice(url.indexOf("//")+2), function(err,res){
-      if(err) return console.log(err)
-    })
-               
-      // DNS lookup is OK
-      //create an ID hash should be UNIQUE
-      
-      let id = sha(res).substring(0,7);
-      let link = url.slice(url.indexOf("//")+2);
-      
-      let newAddress = {address: link, ipAddress: res, hashId: id}
-        
-      //Check if link already exists in db
-      
-      Link.findOne({address: newAddress.address}, function(err, foundId){
-        if(err) return console.log(err)
-        
-        if(foundId){
-           return console.log("found", foundId)
-        } else {
-          console.log("not found")
-          //NOT FOUND of collection empty
-          //Create new db entry
-          Link.create(newAddress, function(err, created){
-            if(err) return console.log(err)
-        
-            console.log("Link added to db", created) 
-            
-            res.redirect("/views/index.html")
-            
-          })
-        }
-    })
-  }
-}
-)
+})
 
 app.listen(process.env.PORT || 3000 , function () {
   console.log('Your app is listening on port ');
