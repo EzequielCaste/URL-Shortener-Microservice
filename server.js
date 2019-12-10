@@ -53,37 +53,26 @@ app.post("/api/shorturl/new", function(req,res){
   
   //check if link already exists in db
   Link.findOne({address: req.body.url}, function(err, foundEntry){
-    if(err) return console.log(err)
+  if(err) return console.log(err)
     
-    // if the returned array is empty we have to create the first db document
-    if(foundEntry.address === req.body.url){
-      console.log("link already exists in db")
+    if(foundEntry){
+      console.log("found")
     } else {
-      
-      //check if url is valid
+      console.log("not found")
+      //the link is not found in the db
+      // verify that the link is a valid link
       
       let regex = /https?:\/\//; 
       let url = req.body.url
   
       if(regex.test(url)){
-    
-      // string contains https:// or http://
-      // splice string to remove http part
-    
-      dns.lookup(url.slice(url.indexOf("//")+2), function(err,res){
-        if(err) return console.log(err)
         
-        })
-               
-        // DNS lookup is OK
-        //create an ID hash should be UNIQUE
+        
       
-   
-    
+      }
+    }
     
   })
-  
-  
 })
 
 app.listen(process.env.PORT || 3000 , function () {
