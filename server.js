@@ -67,6 +67,23 @@ app.post("/api/shorturl/new", function(req,res){
   
       if(regex.test(url)){
         
+        let link = url.slice(url.indexOf("//")+2);
+        console.log(link,res)
+        let newAddress = {address: link, ipAddress: res, hashId: ++linkCounter}
+        
+         
+        
+        //create a new db entry
+        
+        Link.create(newAddress, function(err, created){
+            if(err) return console.log(err)
+        
+            console.log("Link added to db", created) 
+            
+            res.redirect("/views/index.html")
+            
+        })
+        
         
       
       }
