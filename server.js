@@ -59,8 +59,26 @@ app.post("/api/shorturl/new", function(req,res){
     if(foundEntry.address === req.body.url){
       console.log("link already exists in db")
     } else {
-      Link.create()
-    }
+      
+      //check if url is valid
+      
+      let regex = /https?:\/\//; 
+      let url = req.body.url
+  
+      if(regex.test(url)){
+    
+      // string contains https:// or http://
+      // splice string to remove http part
+    
+      dns.lookup(url.slice(url.indexOf("//")+2), function(err,res){
+        if(err) return console.log(err)
+        
+        })
+               
+        // DNS lookup is OK
+        //create an ID hash should be UNIQUE
+      
+   
     
     
   })
