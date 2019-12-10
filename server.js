@@ -39,11 +39,12 @@ mongoose.connect("mongodb+srv://eze:fcc456@cluster0-py5g6.mongodb.net/test?retry
   
 });
 
+let linkCounter = 0;
 
 var linkSchema = new mongoose.Schema({
   address: String,
   ipAddress: String,
-  hashId: String
+  hashId: Number
 });
 
 var Link = mongoose.model("Link",linkSchema);
@@ -67,10 +68,11 @@ app.post("/api/shorturl/new", function(req,res){
       // DNS lookup is OK
       //create an ID hash should be UNIQUE
       
-      let id = sha(res).substring(0,7);
+      
+      //let id = sha(res).substring(0,7);
       let link = url.slice(url.indexOf("//")+2);
       
-      let newAddress = {address: link, ipAddress: res, hashId: id}
+      let newAddress = {address: link, ipAddress: res, hashId: linkCounter++}
         
       //Check if link already exists in db
       
@@ -82,6 +84,7 @@ app.post("/api/shorturl/new", function(req,res){
         } else {
           console.log("not found")
           //NOT FOUND of collection empty
+          
           //Create new db entry
           Link.create(newAddress, function(err, created){
             if(err) return console.log(err)
