@@ -25,7 +25,7 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
-app.get("/a", function(req,res){
+app.get("/api/shorturl/:id", function(req,res){
   res.sendFile(path.join(__dirname, "views", "test.html"))
 })
 
@@ -53,18 +53,38 @@ let Link = mongoose.model("Link",linkSchema);
 app.post("/api/shorturl/new", function(req,res){
   
   let regex = /https?:\/\//; 
-  let link = req.body.url;
-  ;
+  let link = req.body.url
+  let correctlink = link.slice(link.indexOf("//")+2);
+  
   
   if(regex.test(link)){
     //valid LINK
     //DNS Lookup
-    dns.lookup(link.slice(link.indexOf("//")+2), function(err,res){
+    dns.lookup(correctlink, function(err,res){
       if(err) return console.log(err)
       
-      let newAddress = {address: link, ipAddress: res, hashId: ++linkCounter}
+            
+      //console.log(newAddress)
       
-      console.log(newAddress)
+      Link.findOne({address: correctlink}, function(err, found){
+        if(err) return console.log(err)
+        
+        if(found){
+          console.log("found")
+        } else {
+          console.log("not found")
+          
+          let newAddress = {address: correctlink, ipAddress: res, hashId: ++linkCounter}
+          
+          Link.create(newAddress, function(err, created){
+            if(err) return console.log(err)
+            
+            console.log(created, "created")
+            
+          })
+        }
+        
+      })
    
     })
   }
