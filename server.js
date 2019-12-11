@@ -68,9 +68,9 @@ app.post("/api/shorturl/new", function(req,res){
       if(regex.test(url)){
         
         let link = url.slice(url.indexOf("//")+2);
-        console.log(link,res)
-        let newAddress = {address: link, ipAddress: res, hashId: ++linkCounter}
         
+        let newAddress = {address: link, ipAddress: res, hashId: ++linkCounter}
+        console.log(newAddress)
          
         
         //create a new db entry
