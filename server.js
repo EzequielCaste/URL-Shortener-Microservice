@@ -47,7 +47,8 @@ var linkSchema = new mongoose.Schema({
   hashId: Number
 });
 
-var Link = mongoose.model("Link",linkSchema);
+let Link = mongoose.model("Link",linkSchema);
+
 
 app.post("/api/shorturl/new", function(req,res){
   
@@ -56,7 +57,7 @@ app.post("/api/shorturl/new", function(req,res){
   if(err) return console.log(err)
     
     if(foundEntry){
-      console.log("found")
+      return console.log("found")
     } else {
       console.log("not found")
       //the link is not found in the db
@@ -69,20 +70,30 @@ app.post("/api/shorturl/new", function(req,res){
         
         let link = url.slice(url.indexOf("//")+2);
         
-        let newAddress = {address: link, ipAddress: res, hashId: ++linkCounter}
-        console.log(newAddress)
+        dns.lookup(link, function(err,res){
+          if(err) {
+            console.log(err)
+          } else {
+            
+            let newAddress = {address: link, ipAddress: res, hashId: ++linkCounter}
+        
+            Link.create(newAddress, function(err, created){
+              if(err) return console.log(err)
+        
+              return console.log("Link added to db", created) 
+            
+              
+            
+          })
+          }
+        })
+        
+        
          
         
         //create a new db entry
         
-        Link.create(newAddress, function(err, created){
-            if(err) return console.log(err)
-        
-            console.log("Link added to db", created) 
-            
-            res.redirect("/views/index.html")
-            
-        })
+    
         
         
       
