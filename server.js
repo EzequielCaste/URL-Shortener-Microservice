@@ -31,8 +31,10 @@ app.get("/api/shorturl/:id", function(req,res){
   Link.findOne({hashId: req.params.id}, function(err, found){
     if(err) return console.log(err)
     
-    console.log(dns.lookup(found.ipAddress), function(err, link){
+    dns.reverse(found.ipAddress, function(err, link){
       if(err) return console.log(err)
+      
+      console.log(link)
     })
     
   })
