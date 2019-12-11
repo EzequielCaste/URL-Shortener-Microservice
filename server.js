@@ -52,55 +52,25 @@ let Link = mongoose.model("Link",linkSchema);
 
 app.post("/api/shorturl/new", function(req,res){
   
-  //check if link already exists in db
-  Link.findOne({address: req.body.url}, function(err, foundEntry){
-  if(err) return console.log(err)
-    
-    if(foundEntry){
-      return console.log("found")
-    } else {
-      console.log("not found")
-      //the link is not found in the db
-      // verify that the link is a valid link
-      
-      let regex = /https?:\/\//; 
-      let url = req.body.url
+  let regex = /https?:\/\//; 
+  let link = req.body.url;
+  ;
   
-      if(regex.test(url)){
-        
-        let link = url.slice(url.indexOf("//")+2);
-        
-        dns.lookup(link, function(err,res){
-          if(err) {
-            console.log(err)
-          } else {
-            
-            let newAddress = {address: link, ipAddress: res, hashId: ++linkCounter}
-        
-            Link.create(newAddress, function(err, created){
-              if(err) return console.log(err)
-        
-              return console.log("Link added to db", created) 
-            
-              
-            
-          })
-          }
-        })
-        
-        
-         
-        
-        //create a new db entry
-        
-    
-        
-        
+  if(regex.test(link)){
+    //valid LINK
+    //DNS Lookup
+    dns.lookup(link.slice(link.indexOf("//")+2), function(err,res){
+      if(err) return console.log(err)
       
-      }
-    }
+      let newAddress = {address: link, ipAddress: res, hashId: ++linkCounter}
+      
+      console.log(newAddress)
+   
+    })
+  }
     
-  })
+    
+  
 })
 
 app.listen(process.env.PORT || 3000 , function () {
