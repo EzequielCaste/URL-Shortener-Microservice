@@ -25,17 +25,17 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
+//SHORT URL REDIRECTOR
 app.get("/api/shorturl/:id", function(req,res){
   //console.log(req.params.id)
   
   Link.findOne({hashId: req.params.id}, function(err, found){
     if(err) return console.log(err)
     
-    res.redirect("https://"+found.ipAddress)
+    res.redirect("https://"+found.address)
     
   })
 })
-
 
 mongoose.connect("mongodb+srv://eze:fcc456@cluster0-py5g6.mongodb.net/test?retryWrites=true&w=majority",
                  { useUnifiedTopology: true , useNewUrlParser: true }, function(err){
@@ -67,9 +67,8 @@ app.post("/api/shorturl/new", function(req,res){
   if(regex.test(link)){
     //valid LINK
     //DNS Lookup
-    dns.lookup(correctlink, function(err,res){
-      if(err) return console.log(err)
-      
+    dns.lookup(correctlink, function(e,resp){
+      if(e) return console.log(e)      
             
       //console.log(newAddress)
       
@@ -87,9 +86,7 @@ app.post("/api/shorturl/new", function(req,res){
         if(found){
           console.log("found")
         } else {
-          console.log("not found")
-          
-          
+          console.log("not found")           
           
           let newAddress = {address: correctlink, ipAddress: res, hashId: ++linkCounter}
           
@@ -97,6 +94,8 @@ app.post("/api/shorturl/new", function(req,res){
             if(err) return console.log(err)
             
             console.log(created, "created")
+            //res.sendFile(path.join(__dirname, "views", "test.html"));
+            
             
           })
         }
@@ -107,7 +106,7 @@ app.post("/api/shorturl/new", function(req,res){
   }
     
     
-  
+  res.redirect("test.html")
 })
 
 app.listen(process.env.PORT || 3000 , function () {
