@@ -85,6 +85,12 @@ app.post("/api/shorturl/new", function(req,res){
         
         if(found){
           console.log("found")
+          
+          res.json({
+            "original_url": "https://" + newAddress.address,
+            "short_url": 545
+
+})
         } else {
           console.log("not found")           
           
@@ -105,8 +111,9 @@ app.post("/api/shorturl/new", function(req,res){
     })
   }
     
-    
-  res.redirect("test.html")
+  console.log("should redirect")  
+  
+
 })
 
 app.listen(process.env.PORT || 3000 , function () {
