@@ -73,6 +73,10 @@ app.post("/api/shorturl/new", function(req,res){
             
       //console.log(newAddress)
       
+      Link.find({hashId:}, function(err, found){
+        
+      })
+      
       Link.findOne({address: correctlink}, function(err, found){
         if(err) return console.log(err)
         
@@ -80,6 +84,8 @@ app.post("/api/shorturl/new", function(req,res){
           console.log("found")
         } else {
           console.log("not found")
+          
+          
           
           let newAddress = {address: correctlink, ipAddress: res, hashId: ++linkCounter}
           
